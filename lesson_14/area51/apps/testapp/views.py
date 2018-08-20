@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.template.loader import get_template
+from django.shortcuts import render
 from apps.testapp.models import Developer
 import datetime
 
@@ -42,18 +44,25 @@ def time_ahead(request, ahead):
     return HttpResponse(html)
 
 
-def create_dev(requests, username):
+def create_dev(request, username):
     lastname = username[::-1]
     email = '{}@area51.pe'.format(username)
-    dev = Developer(name=username, lastname=lastname, email=email)
-    dev.save()
+    dev = Developer.objects.create(name=username, lastname=lastname, email=email)
+    #dev = Developer(name=username, lastname=lastname, email=email)
+    #dev.save()
     return HttpResponse('Created Developer')
 
 
-def devs(requests):
+def devs(request):
     devs = Developer.objects.all()
     s = ''
     for dev in devs:
         s += '{} '.format(dev.name)
     return HttpResponse(s)
+
+
+def devs_template(request):
+    devs = Developer.objects.all()
+    context = {'devs': devs}
+    return render(request, 'testapp.html', context)
 

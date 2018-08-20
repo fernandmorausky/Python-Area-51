@@ -61,7 +61,7 @@ ROOT_URLCONF = 'area51.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['area51/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

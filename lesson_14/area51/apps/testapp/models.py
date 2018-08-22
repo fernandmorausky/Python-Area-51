@@ -17,6 +17,9 @@ class Company(models.Model):
 
     city = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.name
+
 
 class Developer(models.Model):
     
@@ -31,6 +34,9 @@ class Developer(models.Model):
     email = models.EmailField(
         default=None
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Software(models.Model):
@@ -58,4 +64,7 @@ class Software(models.Model):
     developer = models.ManyToManyField(
         Developer
     )
+
+    def __str__(self):
+        return self.name
 

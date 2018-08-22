@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.template import Context, Template
+from django.shortcuts import render
 import datetime
 
 
@@ -33,13 +34,6 @@ def current_time(request):
 def time_ahead(request, ahead):
     now = datetime.datetime.now()
     time = now + datetime.timedelta(hours=int(ahead))
-    html = '''
-    <html>
-        <body>
-            <h1>PROOF: Agregar {} hora(s)</h1>
-            <h3>{}</h3>
-        </body>
-    </html>
-    '''.format(ahead, time)
-    return HttpResponse(html)
+    c = {'time': time, 'ahead': ahead}
+    return render(request, 'proof/proof-time-ahead.html', c)
 

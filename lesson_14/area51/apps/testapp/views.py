@@ -47,10 +47,48 @@ def time_ahead(request, ahead):
 def create_dev(request, username):
     lastname = username[::-1]
     email = '{}@area51.pe'.format(username)
-    dev = Developer.objects.create(name=username, lastname=lastname, email=email)
-    #dev = Developer(name=username, lastname=lastname, email=email)
-    #dev.save()
+    #dev = Developer.objects.create(name=username, lastname=lastname, email=email)
+    dev = Developer(name=username, lastname=lastname, email=email)
+    dev.save()
     return HttpResponse('Created Developer')
+
+
+def delete_dev(request, id):
+    deleted = Developer.objects.filter(id=id).delete()
+    return HttpResponse(deleted)
+
+
+def update_dev(request, id):
+    dev = Developer.objects.get(id=id)
+    dev.email = 'changed@gmail.com'
+    dev.save()
+    return HttpResponse('Updated Developer')
+
+
+def get_dev(request, id):
+    #dev = Developer.objects.get(id=id)
+    devs = Developer.objects.filter(id=id)
+    if devs:
+        s = devs[0].name
+    else:
+        s = 'No existe'
+    return HttpResponse(s)
+
+
+def filter_devs(request, name):
+    devs = Developer.objects.filter(name=name)
+    s = ''
+    for dev in devs:
+        s += '{} '.format(dev.name)
+    return HttpResponse(s)
+
+
+def filter_devs_for_domain(request, domain):
+    devs = Developer.objects.filter(email__contains=domain)
+    s = ''
+    for dev in devs:
+        s += '{} {}<br>'.format(dev.name, dev.email)
+    return HttpResponse(s)
 
 
 def devs(request):
@@ -64,5 +102,5 @@ def devs(request):
 def devs_template(request):
     devs = Developer.objects.all()
     context = {'devs': devs}
-    return render(request, 'testapp.html', context)
+    return render(request, 'test/testapp.html', context)
 

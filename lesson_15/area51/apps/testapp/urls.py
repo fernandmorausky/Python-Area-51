@@ -17,5 +17,7 @@ urlpatterns = [
     url(r'^filter-devs-domain/([a-zA-Z0-9@]+)/$', filter_devs_for_domain),
     url(r'^update-dev/(\d{1,2})/$', update_dev),
     url(r'^delete-dev/(\d{1,2})/$', delete_dev),
+    url(r'^create-dev/$', create_dev_improved),
+    url(r'^thanks/$', thanks),
 ]
 

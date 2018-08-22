@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.shortcuts import render
 from apps.testapp.models import Developer
@@ -51,6 +51,33 @@ def create_dev(request, username):
     dev = Developer(name=username, lastname=lastname, email=email)
     dev.save()
     return HttpResponse('Created Developer')
+
+
+def create_dev_improved(request):
+    errors = []
+    name = request.POST.get('name', '')
+    lastname = request.POST.get('lastname', '')
+    email = request.POST.get('email', '')
+    if request.method == 'POST' :
+        if not name:
+            errors.append('Por favor introduce el asunto.')
+        if not lastname:
+            errors.append('Por favor introduce un mensaje.')
+        if email and '@' not in email:
+            errors.append('Por favor introduce una direccion de e mail válida.')
+        if not errors:
+            dev = Developer.objects.create(name=name, lastname=lastname, email=email)
+        return HttpResponseRedirect('/test/thanks/')
+    return render(request, 'test/form-dev.html', {
+        'errors': errors,
+        'name': name,
+        'lastname': lastname,
+        'email' : email,
+    })
+
+
+def thanks(request):
+    return render(request, 'test/thanks.html')
 
 
 def delete_dev(request, id):

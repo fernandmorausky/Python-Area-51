@@ -17,6 +17,10 @@ class Company(models.Model):
 
     city = models.CharField(max_length=30)
 
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Companies'
+
     def __str__(self):
         return self.name
 
@@ -34,6 +38,10 @@ class Developer(models.Model):
     email = models.EmailField(
         default=None
     )
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Developers'
 
     def __str__(self):
         return self.name
@@ -64,6 +72,10 @@ class Software(models.Model):
     developer = models.ManyToManyField(
         Developer
     )
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Softwares'
 
     def __str__(self):
         return self.name

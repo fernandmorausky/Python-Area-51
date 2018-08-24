@@ -60,14 +60,14 @@ def create_dev_improved(request):
     email = request.POST.get('email', '')
     if request.method == 'POST' :
         if not name:
-            errors.append('Por favor introduce el asunto.')
+            errors.append('Por favor introduce un nombre.')
         if not lastname:
-            errors.append('Por favor introduce un mensaje.')
-        if email and '@' not in email:
-            errors.append('Por favor introduce una direccion de e mail válida.')
+            errors.append('Por favor introduce un apellido.')
+        if not email or '@' not in email:
+            errors.append('Por favor introduce una dirección de email válida.')
         if not errors:
             dev = Developer.objects.create(name=name, lastname=lastname, email=email)
-        return HttpResponseRedirect('/test/thanks/')
+            return HttpResponseRedirect('/test/thanks/?name=' + name)
     return render(request, 'test/form-dev.html', {
         'errors': errors,
         'name': name,
@@ -77,7 +77,8 @@ def create_dev_improved(request):
 
 
 def thanks(request):
-    return render(request, 'test/thanks.html')
+    name = request.GET.get('name', '')
+    return render(request, 'test/thanks.html', {'name': name})
 
 
 def delete_dev(request, id):

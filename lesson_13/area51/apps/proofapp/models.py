@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Company(models.Model):
-    
     name = models.CharField(
         max_length=50
     )
@@ -17,12 +16,8 @@ class Company(models.Model):
 
     city = models.CharField(max_length=30)
 
-    def __str__(self):
-        return self.name
-
 
 class Developer(models.Model):
-    
     name = models.CharField(
         max_length=50
     )
@@ -35,12 +30,8 @@ class Developer(models.Model):
         default=None
     )
 
-    def __str__(self):
-        return "{} {} ".format(self.name, self.lastname)
-
 
 class Software(models.Model):
-    
     name = models.CharField(
         max_length=50
     )
@@ -64,7 +55,4 @@ class Software(models.Model):
     developer = models.ManyToManyField(
         Developer
     )
-
-    def __str__(self):
-        return self.name
 

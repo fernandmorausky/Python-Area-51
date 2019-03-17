@@ -52,6 +52,12 @@ def create_dev(request, username):
     dev.save()
     return HttpResponse('Created Developer')
 
+def create_dev2(request, username, lastname):
+    email = '{}.{}@area51.pe'.format(username,lastname)
+    #dev = Developer.objects.create(name=username, lastname=lastname, email=email)
+    dev = Developer(name=username, lastname=lastname, email=email)
+    dev.save()
+    return HttpResponse('Created Developer')
 
 def delete_dev(request, id):
     deleted = Developer.objects.filter(id=id).delete()
@@ -63,6 +69,14 @@ def update_dev(request, id):
     dev.email = 'changed@gmail.com'
     dev.save()
     return HttpResponse('Updated Developer')
+
+def dev_update(request):
+    devs = Developer.objects.filter(email__contains="gmail")
+    for dev in devs:
+        dev.email = dev.email.split('@')[0] + '@' + dev.email.split('@')[1].replace("gmail", "google")
+        dev.save()
+    return HttpResponse('Updated Developer')
+
 
 
 def get_dev(request, id):
@@ -79,7 +93,7 @@ def filter_devs(request, name):
     devs = Developer.objects.filter(name=name)
     s = ''
     for dev in devs:
-        s += '{} '.format(dev.name)
+        s += '{} {} '.format(dev.name, dev.lastname)
     return HttpResponse(s)
 
 

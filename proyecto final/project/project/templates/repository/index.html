@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Repositorios</title>
+    </head>
+    <body>
+        <h1>Repositorios </h1>
+        <div >
+            <table>
+            <th scope="row">ID</th>
+            <th scope="row">Repositorio</th>
+            <th scope="row"><a href=".\..\1">Fecha creacion</a></th>
+            <th scope="row"><a href=".\..\2">Ultimo Commit</a></th>
+        {% for repo in repos %}
+            <tr class="model-{{ model.object_name|lower }}">
+                <td scope="row">{{ repo.id }}</td>
+                <td scope="row">{{ repo.name }}</td>
+                <td scope="row">{{ repo.created_at }}</td>
+                <td scope="row">{{ repo.pushed_at  }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+    </body>
+</html>

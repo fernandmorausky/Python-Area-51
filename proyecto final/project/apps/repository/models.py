@@ -6,9 +6,9 @@ class Repository(models.Model):
 
     Name = models.CharField(max_length=150)
 
-    LastCommit = models.DateField()
+    LastCommit = models.DateTimeField()
 
-    LastConsultation = models.DateField(auto_now=True)
+    LastConsultation = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.Name

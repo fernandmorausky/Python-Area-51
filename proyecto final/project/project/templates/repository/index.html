@@ -3,13 +3,28 @@
         <title>Repositorios</title>
     </head>
     <body>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {%if message.tags %} class ="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <h1>Repositorios </h1>
+
+        <div>
+            <form action="/repo/find/" method="get">
+                <input type="text" name="name">
+                <input type="submit" value="Buscar">
+            </form>
+        </div>
+
         <div >
             <table>
             <th scope="row">ID</th>
             <th scope="row">Repositorio</th>
-            <th scope="row"><a href=".\..\1">Fecha creacion</a></th>
-            <th scope="row"><a href=".\..\2">Ultimo Commit</a></th>
+            <th scope="row"><a href="/repo/index/1">Fecha creacion</a></th>
+            <th scope="row"><a href="/repo/index/2">Ultimo Commit</a></th>
         {% for repo in repos %}
             <tr class="model-{{ model.object_name|lower }}">
                 <td scope="row">{{ repo.id }}</td>
